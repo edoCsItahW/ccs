@@ -1,0 +1,17 @@
+{
+    "name": "utils",
+    "version": "1.0.0",
+    "description": "To avoid duplicate code implementation, this package provides some commonly used tools.",
+    "main": "./src/index.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Xiao Songtao",
+    "license": "CC BY-NC-SA 4.0",
+    "type": "module",
+    "keywords": ["utils", "crypto-js", "helper"],
+    "dependencies": {
+        "@types/crypto-js": "^4.2.2",
+        "crypto-js": "^4.2.0"
+    }
+}

@@ -1,0 +1,17 @@
+digraph ERDiagram {
+    // 定义节点样式
+    node [shape=record];
+
+    // Courses表
+    Courses [label="{ Courses | id : INT \l imgUrl : VARCHAR(255) \l title : VARCHAR(100) \l text : TEXT \l teacher : VARCHAR(100) \l stars : INT }"];
+
+    // Users表
+    Users [label="{ Users | id : INT \l name : VARCHAR(100) \l password : VARCHAR(100) \l img : VARCHAR(255) \l solt : VARCHAR(100) \l date : DATE }"];
+
+    // Comments表
+    Comments [label="{ Comments | id : INT \l course_id : INT \l user_id : INT \l content : TEXT \l date : DATE }"];
+
+    // 定义表之间的关系
+    Courses -> Comments [label="1"];
+    Users -> Comments [label="1"];
+}
