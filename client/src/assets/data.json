@@ -1,0 +1,71 @@
+[
+    {
+        "id": 1,
+        "imgUrl": "https://pic2.zhimg.com/v2-e7eb3661da5d8125fc5423febf0a0669_b.jpg",
+        "title": "计算机组成原理",
+        "text": "《计算机组成原理》是一门研究计算机系统结构和硬件设计的基础课。",
+        "teacher": "邓俊辉",
+        "stars": 5,
+        "comment": [
+            {
+                "user": { "name": "小明", "img": null, "id": 3 },
+                "content": "水课",
+                "date": "2021/01/01"
+            },
+            {
+                "user": { "name": "小红", "img": null, "id": 4 },
+                "content": "我的评价是",
+                "date": "2021/01/02"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "imgUrl": "https://picx.zhimg.com/v2-17c2e7d2ab01f2d8456ddec223bd7085_1440w.jpg?source=172ae18b",
+        "title": "计算机网络",
+        "text": "《计算机网络》是一门研究计算机网络技术的基础课。",
+        "teacher": "王晓东",
+        "stars": 4,
+        "comment": [
+            {
+                "user": { "name": "小明", "img": null, "id": 3 },
+                "content": "网课",
+                "date": "2021/01/01"
+            },
+            {
+                "user": { "name": "小张", "img": null, "id": 5 },
+                "content": "就这样",
+                "date": "2021/01/02"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "imgUrl": "https://picx.zhimg.com/v2-d27380526aa283a13e35cfef5762e812_1440w.jpg?source=172ae18b",
+        "title": "编译原理",
+        "text": "《编译原理》是一门研究编译器设计的基础课。",
+        "teacher": "李云龙",
+        "stars": 4,
+        "comment": [
+            {
+                "user": { "name": "庄培鑫", "img": null, "id": 6 },
+                "content": "我是'人肉编译器'",
+                "date": "2021/01/01"
+            },
+            {
+                "user": { "name": "小明", "img": null, "id": 3 },
+                "content": "上面的",
+                "date": "2021/01/02"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "imgUrl": "https://picx.zhimg.com/v2-d27380526aa283a13e35cfef5762e812_1440w.jpg?source=172ae18b",
+        "title": "算法与数据结构",
+        "text": "《算法与数据结构》是一门研究算法和数据结构的基础课。一个很长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长的文本.",
+        "teacher": "李治军",
+        "stars": 4,
+        "comment": []
+    }
+]

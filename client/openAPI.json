@@ -1,0 +1,875 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "课程评分系统数据交互规范",
+        "description": "课程评分系统前后端API接口定义",
+        "version": "1.0.0",
+        "license": {
+            "name": "CC BY-NC-SA 4.0",
+            "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+        },
+        "contact": {
+            "name": "Xiao Songtao",
+            "email": "2207150234@st.sziit.edu.cn"
+        }
+    },
+    "components": {
+        "schemas": {
+            "normalResp": {
+                "type": "object",
+                "description": "普通成功响应数据",
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "description": "响应码",
+                        "example": 200
+                    },
+                    "msg": {
+                        "type": "string",
+                        "description": "响应信息",
+                        "example": "ok"
+                    },
+                    "data": {
+                        "type": "object",
+                        "description": "响应数据",
+                        "default": null
+                    }
+                }
+            },
+            "userResp": {
+                "type": "object",
+                "description": "用户信息响应数据",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "用户ID",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "用户名",
+                        "example": "xxx"
+                    },
+                    "img": {
+                        "type": "string",
+                        "description": "用户头像相对路径",
+                        "example": "/static/img/user.png"
+                    }
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "http://{ip}:{port}/",
+            "description": "本地测试环境",
+            "variables": {
+                "ip": {
+                    "enum": [
+                        "localhost",
+                        "127.0.0.1",
+                        "0.0.0.0",
+                        "192.168.1.100"
+                    ],
+                    "default": "localhost",
+                    "description": "服务IP地址,定义于 vite.config.ts 或者 app.py"
+                },
+                "port": {
+                    "enum": [
+                        "5000",
+                        "7265"
+                    ],
+                    "default": "5000",
+                    "description": "服务端口,定义于 vite.config.ts 或者 app.py"
+                }
+            }
+        }
+    ],
+    "paths": {
+        "/api": {
+            "post": {
+                "tags": [
+                    "api"
+                ],
+                "summary": "本API接口标准根路径",
+                "description": "",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "null",
+                                "description": "用于测试接口可否正常工作"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "成功响应",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/normalResp"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/article": {
+            "post": {
+                "tags": [
+                    "article"
+                ],
+                "summary": "主页面用于获取课程列表",
+                "description": "用于获取课程列表，包括课程名称、教师、封面网络地址、文章内容等信息",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "null",
+                                "description": "无需参数(TODO: 后续可能需要增加参数用于控制返回数据量和缓存)"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "成功响应",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "响应码",
+                                            "example": 200
+                                        },
+                                        "msg": {
+                                            "type": "string",
+                                            "description": "响应信息",
+                                            "example": "ok"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "description": "响应数据",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "description": "课程ID",
+                                                        "example": 1
+                                                    },
+                                                    "imgUrl": {
+                                                        "type": "string",
+                                                        "description": "课程封面网络地址",
+                                                        "example": "http://xxx.jpg"
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "description": "课程名称",
+                                                        "example": "计算机网络"
+                                                    },
+                                                    "teacher": {
+                                                        "type": "string",
+                                                        "description": "课程教师",
+                                                        "example": "xxx"
+                                                    },
+                                                    "text": {
+                                                        "type": "string",
+                                                        "description": "课程概述",
+                                                        "example": "本课程主要介绍计算机网络的基础知识、协议、应用、安全等方面。"
+                                                    },
+                                                    "star": {
+                                                        "type": "integer",
+                                                        "description": "课程评分",
+                                                        "default": 0
+                                                    },
+                                                    "comment": {
+                                                        "type": "array",
+                                                        "description": "课程评论",
+                                                        "items": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "content": {
+                                                                    "type": "string",
+                                                                    "description": "评论内容",
+                                                                    "example": "课程内容不错，讲的很详细。"
+                                                                },
+                                                                "date": {
+                                                                    "type": "string",
+                                                                    "description": "评论日期",
+                                                                    "example": "YYYY/MM/DD"
+                                                                },
+                                                                "user": {
+                                                                    "type": "object",
+                                                                    "description": "评论用户信息",
+                                                                    "properties": {
+                                                                        "name": {
+                                                                            "type": "string",
+                                                                            "description": "用户名",
+                                                                            "example": "xxx"
+                                                                        },
+                                                                        "img": {
+                                                                            "type": "string",
+                                                                            "description": "用户头像相对路径",
+                                                                            "example": "/static/img/user.png"
+                                                                        },
+                                                                        "id": {
+                                                                            "type": "integer",
+                                                                            "description": "用户ID",
+                                                                            "example": 1
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/comment": {
+            "post": {
+                "tags": [
+                    "comment"
+                ],
+                "summary": "主页面用于添加评论",
+                "description": "用于添加评论，包括评论内容、评论日期、评论用户信息等信息",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "description": "课程ID",
+                                        "example": 1
+                                    },
+                                    "uid": {
+                                        "type": "integer",
+                                        "description": "用户ID",
+                                        "example": 1
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "description": "评论内容",
+                                        "example": "课程内容不错，讲的很详细。"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "description": "评论日期",
+                                        "example": "YYYY/MM/DD"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "成功添加",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/normalResp"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "服务器内部错误(数据库错误等)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "响应码",
+                                            "example": 500
+                                        },
+                                        "msg": {
+                                            "type": "string",
+                                            "description": "具体错误信息",
+                                            "example": "服务器内部错误"
+                                        },
+                                        "data": {
+                                            "type": "null",
+                                            "description": "无数据"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "用户相关查询接口",
+                "description": "用于查询用户相关信息，包括用户ID、用户名、用户头像等信息",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "oneOf": [
+                                    {
+                                        "type": "object",
+                                        "description": "查询用户信息",
+                                        "properties": {
+                                            "type": {
+                                                "type": "string",
+                                                "description": "查询类型",
+                                                "default": "query"
+                                            },
+                                            "data": {
+                                                "oneOf": [
+                                                    {
+                                                        "type": "integer",
+                                                        "description": "用户ID",
+                                                        "example": 1
+                                                    },
+                                                    {
+                                                        "type": "string",
+                                                        "description": "用户名",
+                                                        "example": "xxx"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "type": "object",
+                                        "description": "验证token",
+                                        "properties": {
+                                            "type": {
+                                                "type": "string",
+                                                "description": "验证类型",
+                                                "default": "check"
+                                            },
+                                            "token": {
+                                                "type": "string",
+                                                "description": "用户登录成功后的token",
+                                                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6..."
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "成功响应",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "响应码",
+                                            "example": 200
+                                        },
+                                        "msg": {
+                                            "type": "string",
+                                            "description": "响应信息",
+                                            "example": "ok"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/userResp"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "未登录或token过期",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "响应码",
+                                            "example": 401
+                                        },
+                                        "msg": {
+                                            "type": "string",
+                                            "description": "具体错误信息",
+                                            "example": "token失效"
+                                        },
+                                        "data": {
+                                            "type": "null",
+                                            "description": "无数据"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "login"
+                ],
+                "summary": "用户登录接口",
+                "description": "用于用户登录，包括用户名、密码等信息",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "description": "用户登录信息",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "用户名",
+                                        "example": "xxx"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "哈希后的密码",
+                                        "example": "A1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6"
+                                    },
+                                    "time": {
+                                        "type": "string",
+                                        "description": "时间(YYYY/MM/DD HH:mm:ss格式即可,服务器会自动转换为时间戳)",
+                                        "example": "2024/01/01 12:00:00"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "成功登录",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "响应码",
+                                            "example": 200
+                                        },
+                                        "msg": {
+                                            "type": "string",
+                                            "description": "响应信息",
+                                            "example": "ok"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "description": "登录成功信息",
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string",
+                                                    "description": "登录成功后的token",
+                                                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6..."
+                                                },
+                                                "user": {
+                                                    "$ref": "#/components/schemas/userResp"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "用户名或密码错误",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "响应码",
+                                            "example": 401
+                                        },
+                                        "msg": {
+                                            "type": "string",
+                                            "description": "具体错误信息",
+                                            "example": "用户名或密码错误"
+                                        },
+                                        "data": {
+                                            "type": "null",
+                                            "description": "无数据"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "register"
+                ],
+                "summary": "用户注册接口",
+                "description": "用于用户注册，包括用户名、密码等信息",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "description": "用户注册信息",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "用户名",
+                                        "example": "xxx"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "哈希后的密码",
+                                        "example": "A1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6"
+                                    },
+                                    "time": {
+                                        "type": "string",
+                                        "description": "时间(YYYY/MM/DD HH:mm:ss格式即可,服务器会自动转换为时间戳)",
+                                        "example": "2024/01/01 12:00:00"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "成功注册",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "响应码",
+                                            "example": 200
+                                        },
+                                        "msg": {
+                                            "type": "string",
+                                            "description": "响应信息",
+                                            "example": "ok"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "description": "注册成功信息",
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string",
+                                                    "description": "注册成功后的token",
+                                                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6..."
+                                                },
+                                                "user": {
+                                                    "$ref": "#/components/schemas/userResp"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "用户名已存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "响应码",
+                                            "example": 401
+                                        },
+                                        "msg": {
+                                            "type": "string",
+                                            "description": "具体错误信息",
+                                            "example": "用户名已存在"
+                                        },
+                                        "data": {
+                                            "type": "null",
+                                            "description": "无数据"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "服务器内部错误(token生成失败等)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "响应码",
+                                            "example": 500
+                                        },
+                                        "msg": {
+                                            "type": "string",
+                                            "description": "具体错误信息",
+                                            "example": "服务器内部错误"
+                                        },
+                                        "data": {
+                                            "type": "null",
+                                            "description": "无数据"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/upload": {
+            "post": {
+                "tags": [
+                    "upload"
+                ],
+                "summary": "文件上传接口",
+                "description": "用于文件上传，包括文件名、文件内容等信息",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "description": "文件上传信息",
+                                "properties": {
+                                    "data": {
+                                        "type": "string",
+                                        "format": "base64",
+                                        "description": "文件内容(base64编码)"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "文件名(URL编码)",
+                                        "example": "ES%20%E8%AF%BE%E7%A8%8B.jpg"
+                                    },
+                                    "uid": {
+                                        "type": "integer",
+                                        "description": "用户ID",
+                                        "example": 1
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "成功上传",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "响应码",
+                                            "example": 200
+                                        },
+                                        "msg": {
+                                            "type": "string",
+                                            "description": "响应信息",
+                                            "example": "ok"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "description": "文件相对路径",
+                                            "example": "/static/img/ES20E8AFBEE7A88B.jpg"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "服务器内部错误(base64解码失败,文件保存失败等)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "响应码",
+                                            "example": 500
+                                        },
+                                        "msg": {
+                                            "type": "string",
+                                            "description": "具体错误信息",
+                                            "example": "服务器内部错误"
+                                        },
+                                        "data": {
+                                            "type": "null",
+                                            "description": "无数据"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/search": {
+            "post": {
+                "tags": [
+                    "search"
+                ],
+                "summary": "搜索接口",
+                "description": "用于搜索，包括搜索关键字信息",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "description": "搜索信息",
+                                "properties": {
+                                    "key": {
+                                        "type": "string",
+                                        "description": "搜索关键字",
+                                        "example": "计算机网络"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "成功搜索",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "响应码",
+                                            "example": 200
+                                        },
+                                        "msg": {
+                                            "type": "string",
+                                            "description": "响应信息",
+                                            "example": "ok"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "description": "搜索结果,包括课程和用户信息",
+                                            "items": {
+                                                "oneOf": [
+                                                    {
+                                                        "type": "object",
+                                                        "description": "课程信息",
+                                                        "properties": {
+                                                            "data": {
+                                                                "type": "string",
+                                                                "description": "课程名",
+                                                                "example": "计算机网络"
+                                                            },
+                                                            "type": {
+                                                                "type": "string",
+                                                                "description": "类型",
+                                                                "default": "article"
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "description": "用户信息",
+                                                        "properties": {
+                                                            "data": {
+                                                                "$ref": "#/components/schemas/userResp"
+                                                            },
+                                                            "type": {
+                                                                "type": "string",
+                                                                "description": "类型",
+                                                                "default": "user"
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/score": {
+            "post": {
+                "tags": [
+                    "score"
+                ],
+                "summary": "课程评分接口",
+                "description": "用于课程评分，包括课程ID、评分等信息",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "description": "课程评分信息",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "description": "课程ID",
+                                        "example": 1
+                                    },
+                                    "star": {
+                                        "type": "integer",
+                                        "description": "评分",
+                                        "example": 5
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "TODO: 尚未实现"
+                    }
+                }
+            }
+        }
+    }
+}

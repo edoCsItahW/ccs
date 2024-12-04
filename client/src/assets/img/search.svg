@@ -1,0 +1,11 @@
+<!--
+  - Copyright (c) 2024. All rights reserved.
+  - This source code is licensed under the CC BY-NC-SA
+  - (Creative Commons Attribution-NonCommercial-NoDerivatives) License, By Xiao Songtao.
+  - This software is protected by copyright law. Reproduction, distribution, or use for commercial
+  - purposes is prohibited without the author's permission. If you have any questions or require
+  - permission, please contact the author: 2207150234@st.sziit.edu.cn
+  -->
+<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+    <path fill="black" d="M230.570667 622.762667c-108.309333-108.288-108.309333-283.904 0-392.192 108.288-108.309333 283.904-108.309333 392.192 0 103.253333 103.210667 108.074667 267.584 14.506666 376.533333l30.762667 30.741333 7.168-7.168 211.2 211.2-45.269333 45.248-211.2-211.2 7.914666-7.893333-30.72-30.741333c-108.970667 93.546667-273.344 88.704-376.554666-14.506667z m45.226666-346.944c-83.285333 83.306667-83.285333 218.389333 0 301.696 83.328 83.306667 218.410667 83.306667 301.717334 0 83.306667-83.306667 83.306667-218.389333 0-301.696-83.306667-83.306667-218.389333-83.306667-301.696 0z" />
+</svg>
